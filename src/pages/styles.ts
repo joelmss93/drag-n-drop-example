@@ -32,7 +32,7 @@ export const Card = styled.div<CardProps>`
       background: #e0e0e0;
       border: 2px dashed #000;
       box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
-      opacity: 0.7;
+      opacity: 0.5;
     `}
 
   p {
