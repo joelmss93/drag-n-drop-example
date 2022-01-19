@@ -6,6 +6,7 @@ import {
   Droppable,
   DropResult,
 } from 'react-beautiful-dnd';
+
 import { Card, Container } from './styles';
 import { itemsList } from './items';
 
@@ -15,14 +16,13 @@ const DragNDrop: React.FC = () => {
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
 
-    // eslint-disable-next-line no-useless-return
-    if (!destination) return;
+    if (destination) {
+      const items = Array.from(todo);
+      const [newOrder] = items.splice(source.index, 1);
+      items.splice(destination.index, 0, newOrder);
 
-    const items = Array.from(todo);
-    const [newOrder] = items.splice(source.index, 1);
-    items.splice(destination.index, 0, newOrder);
-
-    setTodo(items);
+      setTodo(items);
+    }
   };
 
   return (
@@ -38,12 +38,12 @@ const DragNDrop: React.FC = () => {
             >
               {todo.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided, snapshot) => (
+                  {(provided, { isDragging }) => (
                     <Card
                       ref={provided.innerRef}
+                      isDragging={isDragging}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      isDragging={snapshot.isDragging}
                     >
                       <p>{item.name}</p>
                     </Card>
@@ -54,9 +54,6 @@ const DragNDrop: React.FC = () => {
           )}
         </Droppable>
       </DragDropContext>
-      {/* <Card>
-        <p>Card 1</p>
-      </Card> */}
     </Container>
   );
 };
