@@ -50,6 +50,7 @@ const DragNDrop: React.FC = () => {
                   )}
                 </Draggable>
               ))}
+              {provided.placeholder}
             </div>
           )}
         </Droppable>
